@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Library</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="controls">
+        <input type="text" placeholder="Search by title or author" />
+        <select>
+          <option value="a-z">Sort A-Z</option>
+          <option value="z-a">Sort Z-A</option>
+          <option value="published">Sort by Published Date</option>
+        </select>
+        <select>
+          <option value="grid">Grid View</option>
+          <option value="list">List View</option>
+        </select>
+      </div>
+
+      <div class="book-list grid-view">
+        <div class="book-card">
+          <img src="https://via.placeholder.com/150" alt="Book Thumbnail" />
+          <h3>Book A</h3>
+          <p>Author: John Doe</p>
+          <p>Publisher: ABC Publishers</p>
+          <p>Published: 2023</p>
+          <a href="#" target="_blank">View More</a>
+        </div>
+        <div class="book-card">
+          <img src="https://via.placeholder.com/150" alt="Book Thumbnail" />
+          <h3>Book B</h3>
+          <p>Author: Jane Smith</p>
+          <p>Publisher: XYZ Publishers</p>
+          <p>Published: 2022</p>
+          <a href="#" target="_blank">View More</a>
+        </div>
+        <!-- More book cards -->
+      </div>
+
+      <div class="pagination">
+        <a href="#" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#">Next</a>
+      </div>
+    </div>
+  </body>
+</html>
