@@ -1,0 +1,117 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.book-list {
+  display: grid;
+  gap: 20px;
+}
+
+.grid-view {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.list-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.book-card {
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transition: transform 0.2s;
+}
+
+.book-card:hover {
+  transform: scale(1.05);
+}
+
+.book-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.book-card h3 {
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+.book-card p {
+  font-size: 14px;
+  color: #555;
+  margin-top: 5px;
+}
+
+.book-card a {
+  text-decoration: none;
+  background-color: #007bff;
+  color: white;
+  padding: 8px 10px;
+  display: inline-block;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination a {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: 1px solid #28a745;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #28a745;
+  background: white;
+  transition: background 0.3s, color 0.3s;
+}
+
+.pagination a:hover,
+.pagination a.active {
+  background: #28a745;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
