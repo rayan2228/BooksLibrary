@@ -11,7 +11,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1320px;
   margin: auto;
 }
 
@@ -30,21 +30,14 @@ select {
   outline: none;
 }
 
-.book-list {
-  display: grid;
-  gap: 20px;
-}
-
-.grid-view {
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-}
-
-.list-view {
+.books {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 25px;
 }
 
 .book-card {
+  width: calc(25% - 20px);
   background: white;
   border-radius: 8px;
   padding: 15px;
