@@ -4,6 +4,7 @@ let books = [];
 let defaultData = [];
 const booksDisplay = document.querySelector(".books");
 const sortSelect = document.querySelector("#sort");
+const searchInput = document.querySelector("#search");
 async function fetchBooks() {
   try {
     const response = await fetch(apiUrl);
@@ -13,6 +14,14 @@ async function fetchBooks() {
     return null;
   }
 }
+
+searchInput.addEventListener("input", () => {
+  const searchTerm = searchInput.value.toLowerCase();
+  books = defaultData.filter((book) =>
+    book.volumeInfo.title.toLowerCase().includes(searchTerm)
+  );
+  displayBooks();
+});
 
 sortSelect.addEventListener("change", () => {
   const selectedOption = sortSelect.value;
