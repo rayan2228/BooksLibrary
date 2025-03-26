@@ -1,6 +1,7 @@
 const apiUrl = "https://api.freeapi.app/api/v1/public/books";
 let data = null;
-let books = []
+let books = [];
+let defaultData = [];
 const booksDisplay = document.querySelector(".books");
 const sortSelect = document.querySelector("#sort");
 async function fetchBooks() {
@@ -20,16 +21,27 @@ sortSelect.addEventListener("change", () => {
   } else if (selectedOption === "z-a") {
     books.sort((a, b) => b.volumeInfo.title.localeCompare(a.volumeInfo.title));
   } else if (selectedOption === "oldest") {
-    books.sort((a, b) => new Date(a.volumeInfo.publishedDate) - new Date(b.volumeInfo.publishedDate));
+    books.sort(
+      (a, b) =>
+        new Date(a.volumeInfo.publishedDate) -
+        new Date(b.volumeInfo.publishedDate)
+    );
   } else if (selectedOption === "newest") {
-    books.sort((a, b) => new Date(b.volumeInfo.publishedDate) - new Date(a.volumeInfo.publishedDate));
+    books.sort(
+      (a, b) =>
+        new Date(b.volumeInfo.publishedDate) -
+        new Date(a.volumeInfo.publishedDate)
+    );
+  } else {
+    books = defaultData;
   }
   displayBooks();
 });
 
 (async () => {
   data = await fetchBooks();
-  books = data.data.data
+  books = [...data.data.data];
+  defaultData = [...data.data.data];
   if (data) {
     console.log(books);
     displayBooks();
@@ -39,6 +51,7 @@ sortSelect.addEventListener("change", () => {
 })();
 
 function displayBooks() {
+  booksDisplay.innerHTML = "";
   if (data.statusCode === 200 && data.success) {
     books.map(({ volumeInfo }) => {
       const bookCard = document.createElement("div");
@@ -52,7 +65,7 @@ function displayBooks() {
         `;
       booksDisplay.appendChild(bookCard);
     });
-  }else{
+  } else {
     booksDisplay.innerHTML = "no data found";
   }
 }
