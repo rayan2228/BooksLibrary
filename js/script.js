@@ -5,6 +5,8 @@ let defaultData = [];
 const booksDisplay = document.querySelector(".books");
 const sortSelect = document.querySelector("#sort");
 const searchInput = document.querySelector("#search");
+searchInput.addEventListener("input", debounce(searchBook, 1000));
+sortSelect.addEventListener("change", sortBook);
 async function fetchBooks() {
   try {
     const response = await fetch(apiUrl);
@@ -15,15 +17,15 @@ async function fetchBooks() {
   }
 }
 
-searchInput.addEventListener("input", () => {
+function searchBook() {
   const searchTerm = searchInput.value.toLowerCase();
   books = defaultData.filter((book) =>
     book.volumeInfo.title.toLowerCase().includes(searchTerm)
   );
   displayBooks();
-});
+}
 
-sortSelect.addEventListener("change", () => {
+function sortBook() {
   const selectedOption = sortSelect.value;
   if (selectedOption === "a-z") {
     books.sort((a, b) => a.volumeInfo.title.localeCompare(b.volumeInfo.title));
@@ -45,19 +47,7 @@ sortSelect.addEventListener("change", () => {
     books = defaultData;
   }
   displayBooks();
-});
-
-(async () => {
-  data = await fetchBooks();
-  books = [...data.data.data];
-  defaultData = [...data.data.data];
-  if (data) {
-    console.log(books);
-    displayBooks();
-  } else {
-    booksDisplay.innerHTML = "loading...";
-  }
-})();
+}
 
 function displayBooks() {
   booksDisplay.innerHTML = "";
@@ -77,4 +67,24 @@ function displayBooks() {
   } else {
     booksDisplay.innerHTML = "no data found";
   }
+}
+
+(async () => {
+  data = await fetchBooks();
+  books = [...data.data.data];
+  defaultData = [...data.data.data];
+  if (data) {
+    displayBooks();
+  } else {
+    booksDisplay.innerHTML = "loading...";
+  }
+})();
+
+function debounce(fn, delay) {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    const self = this;
+    timer = setTimeout(() => fn.apply(self, args), delay);
+  };
 }
