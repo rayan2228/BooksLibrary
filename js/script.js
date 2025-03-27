@@ -5,8 +5,11 @@ let defaultData = [];
 const booksDisplay = document.querySelector(".books");
 const sortSelect = document.querySelector("#sort");
 const searchInput = document.querySelector("#search");
+const viewSelect = document.querySelector("#view");
 searchInput.addEventListener("input", debounce(searchBook, 1000));
 sortSelect.addEventListener("change", sortBook);
+viewSelect.addEventListener("change", viewSelectChange);
+
 async function fetchBooks() {
   try {
     const response = await fetch(apiUrl);
@@ -49,6 +52,15 @@ function sortBook() {
   displayBooks();
 }
 
+function viewSelectChange() {
+  const selectedOption = viewSelect.value;
+  if (selectedOption === "grid") {
+    booksDisplay.classList.remove("books-list");
+  } else {
+    booksDisplay.classList.add("books-list");
+  }
+}
+
 function displayBooks() {
   booksDisplay.innerHTML = "";
   if (data.statusCode === 200 && data.success) {
@@ -57,10 +69,12 @@ function displayBooks() {
       bookCard.classList.add("book-card");
       bookCard.innerHTML = `
           <img src="${volumeInfo.imageLinks.smallThumbnail}" alt="Book Thumbnail" />
+          <div>
           <h3>${volumeInfo.title}</h3>
           <p>Author: ${volumeInfo.authors[0]}</p>
           <p>Publisher: ${volumeInfo.publisher}</p>
           <p>Published: ${volumeInfo.publishedDate}</p>
+          </div>
         `;
       booksDisplay.appendChild(bookCard);
     });

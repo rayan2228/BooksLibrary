@@ -36,6 +36,10 @@ select {
   gap: 25px;
 }
 
+.books-list {
+  flex-direction: column;
+}
+
 .book-card {
   width: calc(25% - 20px);
   background: white;
@@ -46,6 +50,13 @@ select {
   flex-direction: column;
   text-align: center;
   transition: transform 0.2s;
+}
+
+.books-list .book-card {
+  width: 100%;
+  flex-direction: row;
+  gap: 20px;
+  text-align: left;
 }
 
 .book-card:hover {
