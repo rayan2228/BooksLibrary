@@ -1,10 +1,20 @@
+// declare variables
 const apiUrl = "https://api.freeapi.app/api/v1/public/books";
+let data = null;
 let books = [];
 let defaultData = [];
+let page = 1;
+let totalPages = 1;
+let previousPage = null;
+let nextPage = null;
+
+// declare elements
 const booksDisplay = document.querySelector(".books");
 const sortSelect = document.querySelector("#sort");
 const searchInput = document.querySelector("#search");
 const viewSelect = document.querySelector("#view");
+
+// add event listeners
 searchInput.addEventListener("input", debounce(searchBook, 1000));
 sortSelect.addEventListener("change", sortBook);
 viewSelect.addEventListener("change", viewSelectChange);
@@ -67,7 +77,7 @@ function displayBooks() {
       const bookCard = document.createElement("div");
       bookCard.classList.add("book-card");
       bookCard.innerHTML = `
-          <img src="${volumeInfo.imageLinks.smallThumbnail}" alt="Book Thumbnail" />
+          <img src="${volumeInfo.imageLinks?.smallThumbnail}" alt="Book Thumbnail" />
           <div>
           <h3>${volumeInfo.title}</h3>
           <p>Author: ${volumeInfo.authors[0]}</p>
@@ -83,15 +93,15 @@ function displayBooks() {
 }
 
 (async () => {
-  let data = await fetchBooks();
-  const totalItems = data.data.totalItems;
-  const page = data.data.page;
-  const limit = data.data.limit;
+  data = await fetchBooks();
+  totalPages = data.data.totalPages;
+  page = data.data.page;
+  previousPage = data.data.previousPage;
+  nextPage = data.data.nextPage;
   books = [...data.data.data];
   defaultData = [...data.data.data];
   if (data) {
-    console.log(data);
-    paginate(totalItems, page, limit);
+    paginate(totalPages, page, previousPage, nextPage);
     displayBooks();
   } else {
     booksDisplay.innerHTML = "loading...";
@@ -106,20 +116,29 @@ function debounce(fn, delay) {
     timer = setTimeout(() => fn.apply(self, args), delay);
   };
 }
-function paginate(totalItems, currentPage, itemsPerPage) {
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-
-  // Ensure the current page is within valid bounds
-  if (currentPage < 1) currentPage = 1;
-  if (currentPage > totalPages) currentPage = totalPages;
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-
-  return {
-    currentPage,
-    totalPages,
-    totalItems,
-    itemsPerPage,
-  };
+function paginate(totalPages, page, previousPage, nextPage) {
+  const div = document.createElement("div");
+  div.classList.add("pagination");
+  document.querySelector(".container").appendChild(div);
+  for (let i = 1; i <= totalPages; i++) {
+    const button = document.createElement("a");
+    button.href = "#";
+    button.textContent = i;
+    if (i === page) {
+      button.classList.add("active");
+    }
+    button.addEventListener("click", () => {
+      fetchBooks(i).then((data) => {
+        totalPages = data.data.totalPages;
+        page = data.data.page;
+        previousPage = data.data.previousPage;
+        nextPage = data.data.nextPage;
+        books = [...data.data.data];
+        displayBooks();
+        document.querySelector(".pagination").remove();
+        paginate(totalPages, page, previousPage, nextPage);
+      });
+    });
+    div.appendChild(button);
+  }
 }
