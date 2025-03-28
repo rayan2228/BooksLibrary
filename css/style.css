@@ -6,17 +6,20 @@
 }
 
 body {
-  background-color: #f8f9fa;
+  background-color: #121212;
+  color: white;
   padding: 20px;
 }
 
 .container {
-  max-width: 1320px;
+  max-width: 1200px;
   margin: auto;
 }
 
 .controls {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
@@ -25,15 +28,18 @@ body {
 input[type="text"],
 select {
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #444;
   border-radius: 5px;
   outline: none;
+  background-color: #222;
+  color: white;
 }
 
 .books {
   display: flex;
   flex-wrap: wrap;
-  gap: 25px;
+  gap: 15px;
+  justify-content: center;
 }
 
 .books-list {
@@ -41,11 +47,11 @@ select {
 }
 
 .book-card {
-  width: calc(25% - 20px);
-  background: white;
+  width: calc(33.333% - 20px);
+  background: #1e1e1e;
   border-radius: 8px;
   padding: 15px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -70,53 +76,54 @@ select {
   object-fit: contain;
 }
 
-.book-card h3 {
-  font-size: 18px;
-  margin-top: 10px;
-}
-
-.book-card p {
-  font-size: 14px;
-  color: #555;
-  margin-top: 5px;
-}
-
-.book-card a {
-  text-decoration: none;
-  background-color: #007bff;
-  color: white;
-  padding: 8px 10px;
-  display: inline-block;
-  margin-top: 10px;
-  border-radius: 5px;
-}
-
 .pagination {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 12px; /* Increased spacing between items */
   margin-top: 20px;
 }
 
-.pagination a {
-  padding: 10px 15px;
-  margin: 0 5px;
-  border: 1px solid #28a745;
-  border-radius: 5px;
+.pagination button,
+.pagination-btn {
+  background-color: #28a745; /* Green primary color */
+  color: white;
+  border: none;
+  padding: 10px 16px; /* Increased padding for better spacing */
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
   text-decoration: none;
-  color: #28a745;
-  background: white;
-  transition: background 0.3s, color 0.3s;
+  font-size: 16px;
 }
 
-.pagination a:hover,
-.pagination a.active {
-  background: #28a745;
-  color: white;
+.pagination-btn.active {
+  background-color: #1e7e34; /* Darker green for active state */
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.pagination button:hover,
+.pagination-btn:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+.pagination button.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-btn {
+  margin: 0 5px; /* Adds space between the page numbers */
 }
 
 @media (max-width: 768px) {
   .controls {
     flex-direction: column;
     gap: 10px;
+  }
+  .book-card {
+    width: 100%;
   }
 }
